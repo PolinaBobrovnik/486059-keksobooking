@@ -1,7 +1,7 @@
 # Личный проект «Кексобукинг» [![Build status][travis-image]][travis-url]
 
 * Студент: [Полина Бобровник](https://up.htmlacademy.ru/javascript/10/user/486059).
-* Наставник: `Неизвестно`.
+* Наставник: [Борис Стрельников](https://htmlacademy.ru/profile/id278461/achievements).
 
 ---
 
