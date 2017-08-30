@@ -28,9 +28,16 @@ var shuffledFeatures = function shuffleFeatures() {
   return allFeatures.slice(Math.floor(Math.random() * 6));
 };
 
+var randomInt = function getRandomInt(min, max) {
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
 
 shuffledArray(numberOfAvatar);
 shuffledArray(titles);
+
+var xCoordinate = randomInt(300, 600);
+var yCoordinate = randomInt(100, 400);
 
 var similarAds = [];
 
@@ -42,11 +49,11 @@ for (var i = 0; i < 8; i++) {
 
     offer: {
       title: titles[i],
-      address: 'similarAds[i].location.x, similarAds[i].location.y',
-      price: Math.floor(Math.random() * 999001) + 1000,
+      address: xCoordinate + ', ' + yCoordinate,
+      price: randomInt(1000, 1000000),
       type: types[Math.floor(Math.random() * 3)],
-      rooms: Math.floor(Math.random() * 5) + 1,
-      guests: Math.floor(Math.random() * 4) + 1,
+      rooms: randomInt(1, 5),
+      guests: randomInt(1, 3),
       checkin: checkinAndOut[Math.floor(Math.random() * 3)],
       checkout: checkinAndOut[Math.floor(Math.random() * 3)],
       features: shuffledFeatures(),
@@ -55,8 +62,8 @@ for (var i = 0; i < 8; i++) {
     },
 
     location: {
-      x: Math.floor(Math.random() * 601) + 300,
-      y: Math.floor(Math.random() * 401) + 100
+      x: xCoordinate,
+      y: yCoordinate
     }
   };
 }
@@ -66,7 +73,7 @@ var fragment1 = document.createDocumentFragment();
 for (var j = 0; j < 8; j++) {
   var newElement = document.createElement('div');
   newElement.className = 'pin';
-  newElement.style = 'left: {{location.x}}px; top: {{location.y}}px';
+  newElement.style = '\"left: ' + (xCoordinate + 20) +'; top: ' + (yCoordinate + 44) + 'px\"';
   newElement.innerHTML = '<img src=\"' + similarAds[j].author.avatar + '\" class=\"rounded\" width=\"40\" height=\"40\">';
 
   fragment1.appendChild(newElement);
