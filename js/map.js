@@ -81,6 +81,14 @@ for (var j = 0; j < 8; j++) {
 
 pinMapElement.appendChild(fragment1);
 
+var featuresClass = similarAds[0].offer.features.map(function(feature) {
+  return 'class=\"feature__image--' + feature;
+});
+
+featuresClass.join(' '); 
+
+console.log(featuresClass);
+
 var firstAd = document.querySelector('.dialog__panel');
 var lodgeTemplate = document.querySelector('#lodge-template').content;
 
@@ -100,7 +108,7 @@ var renderFirstAd = function (similarAd) {
 
   AdElement.querySelector('.lodge__rooms-and-guests').textContent = 'Для ' + similarAds.offer.guests + ' гостей в ' + similarAds.offer.rooms + ' комнатах';
   AdElement.querySelector('.lodge__checkin-time').textContent = 'Заезд после ' + similarAds.offer.checkin + ', выезд до ' + similarAds.offer.checkout;
-  AdElement.querySelector('.lodge__features').innerHTML = '<span class=\"feature__image\" class="feature__image--';
+  AdElement.querySelector('.lodge__features').innerHTML = '<span class=\"feature__image ' + featuresClass + '\"></span>';
   AdElement.querySelector('.lodge__description').textContent = similarAds.offer.description;
   AdElement.querySelector('.dialog__title').src = similarAds.author.avatar;
 
