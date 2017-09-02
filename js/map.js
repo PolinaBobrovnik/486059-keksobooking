@@ -18,30 +18,21 @@ var shuffledArray = function shuffleArray(array) {
   return array;
 };
 
-var shuffledFeatures = function shuffleFeatures() {
-  for (var i = allFeatures.length - 1; i > 0; i--) {
-    var j = Math.floor(Math.random() * (i + 1));
-    var temp = allFeatures[i];
-    allFeatures[i] = allFeatures[j];
-    allFeatures[j] = temp;
-  }
-  return allFeatures.slice(Math.floor(Math.random() * 6));
-};
-
 var randomInt = function getRandomInt(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
-
 shuffledArray(numberOfAvatar);
 shuffledArray(titles);
 
-var xCoordinate = randomInt(300, 600);
-var yCoordinate = randomInt(100, 400);
-
 var similarAds = [];
 
+var xCoordinate;
+var yCoordinate;
+
 for (var i = 0; i < 8; i++) {
+  xCoordinate = randomInt(300, 600);
+  yCoordinate = randomInt(100, 400);
   similarAds[i] = {
     author: {
       avatar: 'img/avatars/user0' + numberOfAvatar[i] + '.png'
@@ -56,7 +47,7 @@ for (var i = 0; i < 8; i++) {
       guests: randomInt(1, 3),
       checkin: checkinAndOut[Math.floor(Math.random() * 3)],
       checkout: checkinAndOut[Math.floor(Math.random() * 3)],
-      features: shuffledFeatures(),
+      features: shuffledArray(allFeatures).slice(Math.floor(Math.random() * 6)),
       description: '',
       photos: []
     },
@@ -86,8 +77,6 @@ var featuresClass = similarAds[0].offer.features.map(function(feature) {
 });
 
 featuresClass.join(' '); 
-
-console.log(featuresClass);
 
 var firstAd = document.querySelector('.dialog__panel');
 var lodgeTemplate = document.querySelector('#lodge-template').content;
