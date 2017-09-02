@@ -8,7 +8,7 @@ var types = ['flat', 'house', 'bungalo'];
 var checkinAndOut = ['12:00', '13:00', '14:00'];
 var allFeatures = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner'];
 
-var shuffledArray = function shuffleArray(array) {
+function shuffleArray(array) {
   for (var i = array.length - 1; i > 0; i--) {
     var j = Math.floor(Math.random() * (i + 1));
     var temp = array[i];
@@ -18,12 +18,12 @@ var shuffledArray = function shuffleArray(array) {
   return array;
 };
 
-var randomInt = function getRandomInt(min, max) {
+function getRandomInt(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
-shuffledArray(numberOfAvatar);
-shuffledArray(titles);
+shuffleArray(numberOfAvatar);
+shuffleArray(titles);
 
 var similarAds = [];
 
@@ -31,8 +31,8 @@ var xCoordinate;
 var yCoordinate;
 
 for (var i = 0; i < 8; i++) {
-  xCoordinate = randomInt(300, 600);
-  yCoordinate = randomInt(100, 400);
+  xCoordinate = getRandomInt(300, 600);
+  yCoordinate = getRandomInt(100, 400);
   similarAds[i] = {
     author: {
       avatar: 'img/avatars/user0' + numberOfAvatar[i] + '.png'
@@ -41,13 +41,13 @@ for (var i = 0; i < 8; i++) {
     offer: {
       title: titles[i],
       address: xCoordinate + ', ' + yCoordinate,
-      price: randomInt(1000, 1000000),
+      price: getRandomInt(1000, 1000000),
       type: types[Math.floor(Math.random() * 3)],
-      rooms: randomInt(1, 5),
-      guests: randomInt(1, 3),
+      rooms: getRandomInt(1, 5),
+      guests: getRandomInt(1, 3),
       checkin: checkinAndOut[Math.floor(Math.random() * 3)],
       checkout: checkinAndOut[Math.floor(Math.random() * 3)],
-      features: shuffledArray(allFeatures).slice(Math.floor(Math.random() * 6)),
+      features: shuffleArray(allFeatures).slice(Math.floor(Math.random() * 6)),
       description: '',
       photos: []
     },
@@ -72,6 +72,12 @@ for (var j = 0; j < 8; j++) {
 
 pinMapElement.appendChild(fragment1);
 
+var typeMaps = {
+  flat: 'Квартира',
+  bungalo: 'Бунгало',
+  house: 'Дом'
+};
+
 var featuresClass = similarAds[0].offer.features.map(function(feature) {
   return 'class=\"feature__image--' + feature;
 });
@@ -81,29 +87,22 @@ featuresClass.join(' ');
 var firstAd = document.querySelector('.dialog__panel');
 var lodgeTemplate = document.querySelector('#lodge-template').content;
 
-var renderFirstAd = function (similarAd) {
+function renderAd(add) {
   var AdElement = lodgeTemplate.cloneNode(true);
 
-  AdElement.querySelector('.lodge__title').textContent = similarAds.offer.title;
-  AdElement.querySelector('.lodge__address').textContent = similarAds.offer.address;
-  AdElement.querySelector('.lodge__price').textContent = similarAds.offer.price + '&#x20bd;/ночь';
-  if (similarAds.offer.type === 'flat') {
-    similarAd.querySelector('.lodge__type').textContent = 'Квартира';
-  } else if (similarAds.offer.type === 'bungalo') {
-    similarAd.querySelector('.lodge__type').textContent = 'Бунгало';
-  } else if (similarAds.offer.type === 'house') {
-    similarAd.querySelector('.lodge__type').textContent = 'Дом';
-  }
-
-  AdElement.querySelector('.lodge__rooms-and-guests').textContent = 'Для ' + similarAds.offer.guests + ' гостей в ' + similarAds.offer.rooms + ' комнатах';
-  AdElement.querySelector('.lodge__checkin-time').textContent = 'Заезд после ' + similarAds.offer.checkin + ', выезд до ' + similarAds.offer.checkout;
+  AdElement.querySelector('.lodge__title').textContent = add.offer.title;
+  AdElement.querySelector('.lodge__address').textContent = add.offer.address;
+  AdElement.querySelector('.lodge__price').textContent = add.offer.price + '&#x20bd;/ночь';
+  AdElement.querySelector('.lodge__type').textContent = typeMaps[add.offer.type];
+  AdElement.querySelector('.lodge__rooms-and-guests').textContent = 'Для ' + add.offer.guests + ' гостей в ' + add.offer.rooms + ' комнатах';
+  AdElement.querySelector('.lodge__checkin-time').textContent = 'Заезд после ' + add.offer.checkin + ', выезд до ' + add.offer.checkout;
   AdElement.querySelector('.lodge__features').innerHTML = '<span class=\"feature__image ' + featuresClass + '\"></span>';
-  AdElement.querySelector('.lodge__description').textContent = similarAds.offer.description;
-  AdElement.querySelector('.dialog__title').src = similarAds.author.avatar;
+  AdElement.querySelector('.lodge__description').textContent = add.offer.description;
+  AdElement.querySelector('.dialog__title img').setAttribute('src', add.author.avatar);
 
   return AdElement;
 };
 
 var fragment2 = document.createDocumentFragment();
-fragment2.appendChild(renderFirstAd(similarAds[0]));
+fragment2.appendChild(renderAd(similarAds[0]));
 firstAd.appendChild(fragment2);
