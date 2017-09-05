@@ -19,7 +19,7 @@ function shuffleArray(array) {
     array[j] = temp;
   }
   return array;
-};
+}
 
 function getRandomInt(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
@@ -67,13 +67,14 @@ function getSimilarAds() {
 var ads = getSimilarAds();
 
 var tokyoPinMap = document.querySelector('.tokyo__pin-map');
+
 var mapItems = document.createDocumentFragment();
 
 for (var i = 0; i < ads.length; i++) {
   var div = document.createElement('div');
   div.classList.add('pin');
   div.style.left = ads[i].location.x + 20 + 'px';
-  div.style.top = ads[i].location.y + 44 +'px';
+  div.style.top = ads[i].location.y + 44 + 'px';
   var img = document.createElement('img');
   img.src = ads[i].author.avatar;
   img.classList.add('rounded');
@@ -85,19 +86,11 @@ for (var i = 0; i < ads.length; i++) {
 }
 tokyoPinMap.appendChild(mapItems);
 
-var featuresClass = ads[0].offer.features.map(function(feature) {
-  return 'feature__image--' + feature;
-});
-var featuresClasses = featuresClass.join(' ');
-console.log(featuresClasses);
-
 function replaceDialogPanel(newDialogPanel) {
-   var offerDialog = document.querySelector('#offer-dialog');
-   var oldDialogPanel = document.querySelector('.dialog__panel');
- 
-   offerDialog.replaceChild(newDialogPanel, oldDialogPanel);
- }
-
+  var offerDialog = document.querySelector('#offer-dialog');
+  var oldDialogPanel = document.querySelector('.dialog__panel');
+  offerDialog.replaceChild(newDialogPanel, oldDialogPanel);
+}
 
 function renderAd(add) {
   var lodgeTemplate = document.querySelector('#lodge-template').content;
@@ -118,6 +111,5 @@ function renderAd(add) {
   replaceDialogPanel(adElement);
   document.querySelector('.dialog__title img').src = add.author.avatar;
 
-};
-
+}
 renderAd(ads[0]);
