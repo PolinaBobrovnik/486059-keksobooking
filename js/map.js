@@ -83,7 +83,7 @@ function createPinsMap(ads) {
     img.width = 40;
     img.height = 40;
     div.appendChild(img);
-    div.setAttribute('data-index', 'i');
+    div.setAttribute('data-index', i);
 
     mapItems.appendChild(div);
   }
@@ -94,7 +94,7 @@ function createPinsMap(ads) {
 var allAds = getSimilarAds();
 createPinsMap(allAds);
 
-function renderAdd(item) {
+function renderAd(item) {
   var lodgeTemplate = document.querySelector('#lodge-template').content;
   var adElement = lodgeTemplate.cloneNode(true);
 
@@ -115,7 +115,7 @@ function renderAdd(item) {
 }
 
 var offerDialog = document.querySelector('#offer-dialog');
-offerDialog.replaceChild(renderAdd(0), offerDialog.querySelector('.dialog__panel'));
+offerDialog.replaceChild(renderAd(0), offerDialog.querySelector('.dialog__panel'));
 
 var tokioPins = document.querySelector('.tokyo__pin-map');
 
@@ -156,7 +156,7 @@ var delActivePin = function () {
 
 var openDialog = function (evt) {
   var indexPin = evt.currentTarget.getAttribute('data-index');
-  offerDialog.replaceChild(renderAdd(indexPin), offerDialog.querySelector('.dialog__panel'));
+  offerDialog.replaceChild(renderAd(indexPin), offerDialog.querySelector('.dialog__panel'));
   var containHidden = offerDialog.classList.contains('hidden');
   if (containHidden !== null) {
     offerDialog.classList.remove('hidden');
